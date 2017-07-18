@@ -1,0 +1,11 @@
+{
+  "name": "libapi",
+  "version": "1.0.0",
+  "description": "library api for wmdd 4935",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "amarjot",
+  "license": "ISC"
+}
