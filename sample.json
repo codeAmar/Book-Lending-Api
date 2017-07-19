@@ -1,0 +1,60 @@
+// the structure of collection looks like :
+
+{
+    "author": "terry crews",
+    "copies": [
+        {
+            "editionDate": "12-13-2013",
+            "editionName": "first",
+            "issued": {
+                "isIssued": "true",
+                "issuedTo": "are we there yet",
+                "reserved": "false"
+            }
+        }
+    ],
+    "genre": "music",
+    "isbn": "213",
+    "publication": {
+        "cityPublished": "vancouver",
+        "date": "12-21-2012",
+        "publisher": "terry crews"
+    },
+    "title": "book that contain pizza"
+}
+
+
+
+
+// All of these queries are executed in httpie
+
+Home
+http :3000/
+
+Get Books //limit 10
+http :3000/books
+
+Get Books Id
+http :3000/books/12345
+
+Post Books
+echo '{"title":"book that contain beer", "isbn":"213", "author":"terry crews", "genre":"beer", "publication":{"date":"12-21-2012","publisher":"terry crews","cityPublished":"vancouver"},"copies":[{"editionName":"first","editionDate":"12-13-2013","issued":{"isIssued":"true","issuedTo":"are we there yet","reserved":"false"}}]}' | http POST :3000/books
+
+Update Books
+echo '{"title":"book that contain pizza", "isbn":"213", "author":"terry crews", "genre":"music", "publication":{"date":"12-21-2012","publisher":"terry crews","cityPublished":"vancouver"},"copies":[{"editionName":"first","editionDate":"12-13-2013","issued":{"isIssued":"true","issuedTo":"are we there yet","reserved":"false"}}]}' | http PUT :3000/books
+
+
+Delete Books
+http DELETE :3000/books/12345
+
+
+QUERY BOOKS
+
+    Genre Query
+    http  :3000/books/?genre="beer"
+
+    Title Query
+    http  :3000/books/?title="watermelon"
+
+    author Query
+    http  :3000/books/?author="terry crews"
