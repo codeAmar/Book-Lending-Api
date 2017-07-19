@@ -3,12 +3,27 @@ require('dotenv').config()
 const joi = require('joi')
 const monk = require('monk')
 const db = monk(process.env.DB_URL)
-// .then(()=>console.log('server:connected'))
+
 db.then((err)=>{
   if(err) console.log('error :'+err);
   console.log('connected : db');
 })
+
 const students = db.get('books')
+
+const users = db.get('users')
+
+const usersSchema={
+  name:joi.string().required().max(30),
+  email:joi.string().required().email(),
+  booksBorrowed:joi.object().keys({
+    dueDate:joi.date().optional(),
+    //make changes - if book is borrowed then only set the due date
+    borrowed:joi.string().optional()
+  }).and('dueDate','borrowed'),
+  booksReserved:joi.string().optional(),
+  lateFee:joi.number().precision(2).optional()
+}
 
 const bookSchema = {
   title:joi.string().required().max(30),
@@ -37,7 +52,9 @@ const bookSchema = {
 
 module.exports = {
   students:students,
-  bookSchema:bookSchema
+  bookSchema:bookSchema,
+  users:users,
+  usersSchema:usersSchema
 }
 
 

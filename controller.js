@@ -9,7 +9,13 @@ module.exports ={
   postBooks:postBooks,
   updateBooks:updateBooks,
   deleteBooks:deleteBooks,
-  queryBooks:queryBooks
+  queryBooks:queryBooks,
+  getAllUsers:getAllUsers,
+  getSingleUser:getSingleUser,
+  updateUser:updateUser,
+  createUser:createUser,
+  deleteUser:deleteUser,
+  queryUsers:queryUsers
 }
 
 function getHome(req,res){
@@ -47,9 +53,9 @@ async function queryBooks(req,res){
     }
   }
 
-  if(req.query.title){
-    let queryBooksResult = await models.students.find({"title":{$regex:req.query.title,$options:'i'}})
-    if(Object.keys(queryBooksResult)){
+  if(req.query.lateFee){{
+    lesearchueryBooksResult = await models.students.find({"title":{$regex:req.query.title,$options:'i'}})
+    if(Object.keys(lesearchueryBooksResult)){
       return res(queryBooksResult).code(200)
     }else{
       return res('please correct the query format').code(404)
@@ -64,4 +70,36 @@ async function queryBooks(req,res){
       return res('please correct the query format').code(404)
     }
   }
+}
+
+
+// /////////////////////////////////////////////////////////////////////
+
+
+async function getAllUsers(req,res){
+  let allUsers= await models.users.find({},{limit:5})
+  return res(allUsers)
+}
+async function getSingleUser(req,res){
+/// make change so that each email is unique
+  let allUsers= await models.users.find({"email":req.params.email})
+  return res(allUsers).code(200)
+}
+async function updateUser(req,res){
+  let updatedUsers= await models.users.findOneAndUpdate({"email":req.payload['email']},{$set:req.payload})
+  return res(updatedUsers).code(200)
+}
+async function createUser(req,res){
+  let newUser= await models.users.insert(req.payload)
+  return res(newUser).code(200)
+}
+async function deleteUser(req,res){
+  let delUser = await models.users.findOneAndDelete({"email":req.params.email})
+  return res(delUser).code(200)
+}
+async function queryUsers(req,res){
+  if(req.query.lateFee){
+    //make changes here so that only late fee users are returned
+  let searchUser = await models.users.find({"lateFee":1})
+  return res(searchUser).code(200)
 }
