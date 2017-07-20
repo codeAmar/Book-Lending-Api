@@ -53,7 +53,7 @@ async function queryBooks(req,res){
     }
   }
 
-  if(req.query.lateFee){{
+  if(req.query.lateFee){
     lesearchueryBooksResult = await models.students.find({"title":{$regex:req.query.title,$options:'i'}})
     if(Object.keys(lesearchueryBooksResult)){
       return res(queryBooksResult).code(200)
@@ -90,6 +90,7 @@ async function updateUser(req,res){
   return res(updatedUsers).code(200)
 }
 async function createUser(req,res){
+  await models.users.ensureIndex("email",{unique:true})
   let newUser= await models.users.insert(req.payload)
   return res(newUser).code(200)
 }
@@ -100,6 +101,6 @@ async function deleteUser(req,res){
 async function queryUsers(req,res){
   if(req.query.lateFee){
     //make changes here so that only late fee users are returned
-  let searchUser = await models.users.find({"lateFee":1})
+  let searchUser = await models.users.find({"lateFee":{$gt:0}})
   return res(searchUser).code(200)
-}
+}}

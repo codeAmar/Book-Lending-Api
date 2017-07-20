@@ -7,20 +7,22 @@ const db = monk(process.env.DB_URL)
 db.then((err)=>{
   if(err) console.log('error :'+err);
   console.log('connected : db');
+
 })
 
 const students = db.get('books')
 
 const users = db.get('users')
 
-const usersSchema={
+const usersSchema = {
   name:joi.string().required().max(30),
   email:joi.string().required().email(),
-  booksBorrowed:joi.object().keys({
-    dueDate:joi.date().optional(),
-    //make changes - if book is borrowed then only set the due date
+  booksBorrowed:joi.array().items(joi.object().keys({
+    dueDate:joi.date().optional().when('borrowed',{
+      is:joi.valid(),
+      then:joi.required()}),
     borrowed:joi.string().optional()
-  }).and('dueDate','borrowed'),
+  }).and('dueDate','borrowed')).optional(),
   booksReserved:joi.string().optional(),
   lateFee:joi.number().precision(2).optional()
 }
@@ -59,3 +61,7 @@ module.exports = {
 
 
 // echo '{"title":"book1", "isbn":"12345", "author":"amar", "genre":"music", "publication":{"date":"12-21-2012","publisher":"ravi","cityPublished":"vancouver"},"copies":[{"editionName":"first","editionDate":"12-13-2013","issued":{"isIssued":"true","issuedTo":"amarjot","reserved":"false"}}]}' | http  :3000/books
+
+
+
+// echo '{ "email":"amarjotsingh90@yahoo.com","name":"amarjot singh","booksReserved":"node8","booksBorrowed":[{"borrowed":"javascript","dueDate":"12-13-2013"}],"lateFee":"300"}' | http POST :3000/users
