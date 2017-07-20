@@ -33,6 +33,7 @@ module.exports = [
   {
       method:'PUT',
       path:'/books',
+      config:{validate:{payload:models.bookSchema}},
       handler:eventController.updateBooks
         //update a book record
         //validate with joi
@@ -52,5 +53,41 @@ module.exports = [
         //   can use a regular expression for this with your database and mongodb find, title: /the long
         //   goodbye/)
         // -- author get all books by an author author=raymond chandler
+  },
+
+
+//////////////////////////////////////////////////////
+
+  {
+      method:'GET',
+      path:'/users',
+      handler:eventController.getAllUsers
+  },
+  {
+      method:'GET',
+      path:'/users/{email}',
+      handler:eventController.getSingleUser
+  },
+  {
+      method:'POST',
+      path:'/users',
+      config:{validate:{payload:models.usersSchema}},
+      handler:eventController.createUser
+  },
+  {
+      method:'PUT',
+      path:'/users',
+      config:{validate:{payload:models.usersSchema}},
+      handler:eventController.updateUser
+  },
+  {
+      method:'DELETE',
+      path:'/users/{email}',
+      handler:eventController.deleteUser
+  },
+  {
+      method:'GET',
+      path:'/users/{p*}',
+      handler:eventController.queryUsers
   }
 ]
