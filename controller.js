@@ -90,8 +90,8 @@ async function updateUser(req,res){
   return res(updatedUsers).code(200)
 }
 async function createUser(req,res){
-  await models.users.ensureIndex("email",{unique:true})
   let newUser= await models.users.insert(req.payload)
+  await models.users.index({email:1},{unique:true})
   return res(newUser).code(200)
 }
 async function deleteUser(req,res){
