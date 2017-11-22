@@ -1,17 +1,27 @@
-This Repository highlights the work done for wmdd 4935 assignement 4
+## About
+Book lending API is developed with node.js version 8.
+It uses async and await to provide synchronity to the tasks.
 
-Team members:
-Amarjot Singh 
-Vivek 
-Chirag
-
-
-This rep doesn't include .env file and will be delivered to professor by email
-
-Completed Tasks :
-books and users api
+## Dependencies
+Following are the project dependencies:
+* Hapi
+* Joi
+* Monk
+* dotenv
 
 
-Instructions:
--sample commands to execute in books and user api has been provided in sample.json file
-- .env file will be provided in email attachment, which will be inserted into libapi folder (just beside the index.js).
+## Steps to run the project
+
+1. Install node and all the dependencies.
+2. Create an .env file inside the main project directory if not present already.
+```
+DB_URL='<enter value here>'
+PORT= 3000
+```
+3. Run command, once you are inside the project directory.
+ > node index.js
+4. Now you can check the project on the localhost:3000/
+
+
+
+*NOTE*- Sample.json include the example commands to execute the tasks in the api.  
