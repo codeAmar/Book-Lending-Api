@@ -20,8 +20,8 @@ PORT= 3000
 ```
 3. Run command, once you are inside the project directory.
  > node index.js
-4. Now you can check the project on the localhost:3000/
-
+4. You can check the project on the localhost:3000/
+5. Now you can run the post commands by using httpie, curl or postman -  sample commands are provided in sample.json
 
 
 *NOTE*- Sample.json include the example commands to execute the tasks in the api.  
